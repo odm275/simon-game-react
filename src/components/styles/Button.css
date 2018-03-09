@@ -1,0 +1,38 @@
+.Button-green{
+    color: #00a74a;
+}
+.Button-green-active{
+    color: #13ff7c;
+    transform: scale(1.3);
+}
+.Button-red{
+    color:#9f0f17;
+}
+.Button-red-active{
+    color:#ff4c4c;
+    transform: scale(1.3);
+}
+
+.Button-blue{
+    color: #094a8f;
+}
+
+.Button-blue-active{
+    color: #1c8cff;
+    transform: scale(1.3);
+}
+
+.Button-yellow{
+    color:#cca707;
+}
+
+.Button-yellow-active{
+    color:#fed93f;
+    transform: scale(1.3);    
+}
+
+.Button-stretch{
+    transition: all .3s ease-in;
+    display:inline-block;
+}
+
