@@ -1,34 +1,31 @@
-.Button-green{
+.Button-green-off{
     color: #00a74a;
 }
-.Button-green-active{
+.Button-green-on{
     color: #13ff7c;
-    transform: scale(1.3);
+  
 }
-.Button-red{
+.Button-red-off{
     color:#9f0f17;
 }
-.Button-red-active{
+.Button-red-on{
     color:#ff4c4c;
-    transform: scale(1.3);
 }
 
-.Button-blue{
+.Button-blue-off{
     color: #094a8f;
 }
 
-.Button-blue-active{
+.Button-blue-on{
     color: #1c8cff;
-    transform: scale(1.3);
 }
 
-.Button-yellow{
+.Button-yellow-off{
     color:#cca707;
 }
 
-.Button-yellow-active{
+.Button-yellow-on{
     color:#fed93f;
-    transform: scale(1.3);    
 }
 
 .Button-stretch{

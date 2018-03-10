@@ -7,7 +7,6 @@ class OnOff extends Component{
     }
     render(){
         const borderRadiusStyle = { borderRadius: 2 };
-        console.log(this.state.value);
         return(
             <ToggleButton
             value={ this.state.value || false }

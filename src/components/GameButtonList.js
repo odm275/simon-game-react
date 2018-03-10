@@ -13,7 +13,7 @@ const GameButtonList = (props) => {
             size="5x"
             style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
             />,
-            color: 'green'
+            style: "Button-green-off"
         },
         {
             id:'red',
@@ -23,7 +23,7 @@ const GameButtonList = (props) => {
             size="5x"
             style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
             />,
-            color:'red'
+            style: "Button-red-off"
         },
         {
             id:'blue',
@@ -33,7 +33,7 @@ const GameButtonList = (props) => {
             size="5x"
             style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
             />,
-            color:'blue'  
+            style: "Button-blue-off"  
         },
         {
             id:'yellow',
@@ -43,13 +43,22 @@ const GameButtonList = (props) => {
             size="5x"
             style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
             />,
-            color:'yellow'
+            style: "Button-yellow-off"
         },
       ],
     };
+
+    //How can humanClick and computerPseudoClick both use this effectively to render the right effects from the data in Game State?
+    
     const GameButtons = buttonId.buttons.map(button =>{
+        console.log(props.humanClickId);
+        if(button.id===props.humanClickId){
+            const buttonStyleOn = `Button-${props.humanClickId}-on`;
+         button.style = buttonStyleOn; 
+        }
         return (
-        <GameButtonEffects stretch='stretch' color = {button.color}>
+            
+        <GameButtonEffects id = {button.id}  style = {button.style} stretch='Button-stretch'>
         <GameButton id={button.id} symbol = {button.symbol} onHumanTurnClick={props.onHumanTurnClick}/>
         </GameButtonEffects>
         );
@@ -61,9 +70,20 @@ const GameButtonList = (props) => {
         </div>
     );
 };
+
+function clickDatatoUI(id,clickid){
+    
+}
+function arrayDatatoUI(){
+
+}
+
+
+//Handle the dynamic aspects of styling/clickable/effects/etc ...
+//Distribute the state from Game to the correct UI.
 function GameButtonEffects(props){
     return(
-        <div className = {`Button-${props.stretch} Button-${props.color}`}>
+        <div className = {`${props.stretch} ${props.style}`}>
             {props.children}
         </div>
     );
