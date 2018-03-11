@@ -13,7 +13,7 @@ const GameButtonList = (props) => {
             size="5x"
             style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
             />,
-            style: "Button-green-off"
+            defaultStyle: "Button-green-off"
         },
         {
             id:'red',
@@ -23,7 +23,7 @@ const GameButtonList = (props) => {
             size="5x"
             style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
             />,
-            style: "Button-red-off"
+            defaultStyle: "Button-red-off"
         },
         {
             id:'blue',
@@ -33,7 +33,7 @@ const GameButtonList = (props) => {
             size="5x"
             style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
             />,
-            style: "Button-blue-off"  
+            defaultStyle: "Button-blue-off"  
         },
         {
             id:'yellow',
@@ -43,29 +43,31 @@ const GameButtonList = (props) => {
             size="5x"
             style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
             />,
-            style: "Button-yellow-off"
+            defaultStyle: "Button-yellow-off"
         },
       ],
     };
-
-    //How can humanClick and computerPseudoClick both use this effectively to render the right effects from the data in Game State?
-    
     const GameButtons = buttonId.buttons.map(button =>{
-        console.log(props.humanClickId);
+    let cssClasses = '';  
+        
+        const buttonStyleOn = `Button-${props.humanClickId}-on`; 
+        //const buttonStyleOff =  `Button-${props.humanClickId}-off`;        
         if(button.id===props.humanClickId){
-            const buttonStyleOn = `Button-${props.humanClickId}-on`;
-         button.style = buttonStyleOn; 
+            cssClasses=buttonStyleOn;
+        }else{
+            cssClasses = button.defaultStyle;
         }
+        console.log(cssClasses);
+        
         return (
-            
-        <GameButtonEffects id = {button.id}  style = {button.style} stretch='Button-stretch'>
-        <GameButton id={button.id} symbol = {button.symbol} onHumanTurnClick={props.onHumanTurnClick}/>
+        <GameButtonEffects id = {button.id}  style = {`${cssClasses}`} stretch='Button-stretch'>
+        <GameButton id={button.id} symbol = {button.symbol}  onHumanTurnClick={props.onHumanTurnClick}/>
         </GameButtonEffects>
         );
 
     });
     return(
-        <div className="GameButtonList">
+        <div className="">
                 {GameButtons}
         </div>
     );

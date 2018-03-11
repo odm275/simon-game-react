@@ -22,6 +22,7 @@ class Game extends Component{
 
     Turn(){
         this.handleComputerTurn();
+
     }
     
     
@@ -52,15 +53,15 @@ class Game extends Component{
     
     render(){
             const TurnOn = this.state.humanTurns.length;
-            const humanClickId = this.state.humanTurns[TurnOn-1];//   Going tell us what button to light up on human turn
-            const computerPseudoClicksIds = this.state.computerTurns;
+            const humanClickId = this.state.humanTurns[TurnOn-1];//  props for GameButtonList
+            const computerPseudoClicksIds = this.state.computerTurns;//  props for GameButtonList
         return(
             <div className="Game">
                 <OnOff/>
                 <GameButtonList 
-                    onHumanTurnClick = {this.handleHumanTurn} 
-                    humanClickId = {humanClickId}
-                    computerTurnOn = {computerPseudoClicksIds}
+                    onHumanTurnClick = {this.handleHumanTurn} // Function to trigger handleHumanTurn onClick
+                    humanClickId = {humanClickId} // Pass to match button id and figure out which button should style up
+                    computerPseudoClickIds = {computerPseudoClicksIds}
                 />
                 <Mode/>
                 <Count/>
