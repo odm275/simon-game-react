@@ -3,8 +3,8 @@ import GameButton from './GameButton';
 import FontAwesome from 'react-fontawesome';
 
 const GameButtonList = (props) => {
-    const buttonId = {
-    buttons:[
+    
+    const buttonList = [
         {
             id:'green',
             symbol:<FontAwesome
@@ -45,41 +45,35 @@ const GameButtonList = (props) => {
             />,
             defaultStyle: "Button-yellow-off"
         },
-      ],
-    };
-    const GameButtons = buttonId.buttons.map(button =>{
-    let cssClasses = '';  
-        
-        const buttonStyleOn = `Button-${props.humanClickId}-on`; 
-        //const buttonStyleOff =  `Button-${props.humanClickId}-off`;        
-        if(button.id===props.humanClickId){
-            cssClasses=buttonStyleOn;
+      ];
+    
+    
+
+
+
+    const GameButtons = buttonList.map(button =>{
+        let cssClass = '';
+        const buttonStyleOn = `Button-${props.turnButtonOn}-on`; 
+        if(button.id===props.turnButtonOn){
+            cssClass=buttonStyleOn;
         }else{
-            cssClasses = button.defaultStyle;
+            cssClass = button.defaultStyle;
         }
-        console.log(cssClasses);
-        
+        console.log(cssClass);
+
         return (
-        <GameButtonEffects id = {button.id}  style = {`${cssClasses}`} stretch='Button-stretch'>
-        <GameButton id={button.id} symbol = {button.symbol}  onHumanTurnClick={props.onHumanTurnClick}/>
+        <GameButtonEffects stretch='Button-stretch'> {/*Styling Manager*/}
+        <GameButton id={button.id} symbol = {button.symbol}  onHumanTurn={props.onHumanTurn}  style = {`${cssClass}`}/>
         </GameButtonEffects>
         );
 
     });
     return(
-        <div className="">
+        <div className="Buttons">
                 {GameButtons}
         </div>
     );
 };
-
-function clickDatatoUI(id,clickid){
-    
-}
-function arrayDatatoUI(){
-
-}
-
 
 //Handle the dynamic aspects of styling/clickable/effects/etc ...
 //Distribute the state from Game to the correct UI.

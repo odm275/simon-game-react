@@ -1,10 +1,11 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 
+//  React Components
 import OnOff from './OnOff';
-import Mode from './Mode';
-import Count from './Count';
+import Counter from './Counter';
+import Start from './Start';
+import Strict from './Strict';
 import GameButtonList from './GameButtonList';
-
 
 class Game extends Component{
     constructor(){
@@ -12,28 +13,32 @@ class Game extends Component{
         this.computerTurns = [];
         this.humanTurns = [];
         this.state = {
-            computerTurns:[],
-            humanTurns:[],
-            counter: 0,
-            strict:false,
+            //Settings
+                counter: 9,
+                strict:false,
+                toggleOn:false,
+            //GameState
+                computerTurns:[],
+                humanTurns:[],
         };
-        this.handleHumanTurn = this.handleHumanTurn.bind(this);
+    
+    this.toggleOnOff = this.toggleOnOff.bind(this);
+    this.onHumanTurn = this.onHumanTurn.bind(this);
     }
 
-    Turn(){
-        this.handleComputerTurn();
-
+    toggleOnOff(){
+        this.setState({toggleOn:!this.state.toggleOn});
     }
-    
-    
-    handleHumanTurn(buttonId){
+
+//GAME STATE METHODS
+    onHumanTurn(buttonId){
         //Human should go onClick
         this.humanTurns.push(buttonId);// keep a history of the turns
-        this.setState({humanTurns:this.humanTurns});
+        this.setState({humanTurns:this.humanTurns});        
     }
 
   
-    handleComputerTurn(){
+    onComputerTurn(){
         switch(Math.floor((Math.random() * 4))){
             case 0:
             this.computerTurns.push('green');
@@ -50,24 +55,29 @@ class Game extends Component{
         }
         this.setState({computerTurns:this.computerTurns}); 
     }
-    
+  
+
     render(){
-            const TurnOn = this.state.humanTurns.length;
-            const humanClickId = this.state.humanTurns[TurnOn-1];//  props for GameButtonList
-            const computerPseudoClicksIds = this.state.computerTurns;//  props for GameButtonList
+        const TurnOn = this.state.humanTurns.length;
+        const TurnThisButtonOn = this.state.humanTurns[TurnOn-1];//  props for GameButtonList
         return(
-            <div className="Game">
-                <OnOff/>
-                <GameButtonList 
-                    onHumanTurnClick = {this.handleHumanTurn} // Function to trigger handleHumanTurn onClick
-                    humanClickId = {humanClickId} // Pass to match button id and figure out which button should style up
-                    computerPseudoClickIds = {computerPseudoClicksIds}
-                />
-                <Mode/>
-                <Count/>
+            <div className="settings">
+            <Counter counter = {this.state.counter}/>
+            <Start/> {/*Starts Game + Reset Game */}
+            <Strict/>
+            <OnOff
+                toggleOn = {this.state.toggleOn} 
+                toggleOnOff = {this.toggleOnOff}/>
+
+            <GameButtonList 
+                onHumanTurn = {this.onHumanTurn}
+                turnButtonOn = {TurnThisButtonOn}
+            />
             </div>
         );
     }
+
+    
 }
 
 export default Game;

@@ -1,25 +1,17 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ToggleButton from 'react-toggle-button';
-class OnOff extends Component{
-    constructor(props){
-        super(props);
-        this.state = {value:false}
-    }
-    render(){
-        const borderRadiusStyle = { borderRadius: 2 };
-        return(
-            <ToggleButton
-            value={ this.state.value || false }
+
+
+const OnOff = (props) =>{
+    const borderRadiusStyle = { borderRadius: 2 };
+    return(
+        <ToggleButton
+            value={ props.toggleOn }
             thumbStyle={borderRadiusStyle}
             trackStyle={borderRadiusStyle}
-            onToggle={(value) => {
-                this.setState({
-                value: !value,
-                })
-            }} />
-        );
-    }
-
-}
+            onToggle={props.toggleOnOff}
+        />
+    );
+};
 
 export default OnOff;

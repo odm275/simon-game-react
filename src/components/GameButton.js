@@ -2,10 +2,11 @@ import React from 'react';
 
 const GameButton = (props) => {
    const handleHumanTurn = () =>{
-        props.onHumanTurnClick(props.id);
+       
+        props.onHumanTurn(props.id);
     };
     return(
-        <div id={props.id} onClick={handleHumanTurn}>
+        <div id={props.id} onClick={handleHumanTurn} className={props.style}>
             {props.symbol}
         </div>
     );
