@@ -1,22 +1,24 @@
 import React, {Component} from 'react';
 
 //  React Components
-import OnOff from './OnOff';
-import Counter from './Counter';
+import OnOff from './OnOff'; //Doesn't need redux
+import Counter from './Counter'; //Doesn't need redux
 import Start from './Start';
 import Strict from './Strict';
 import GameButtonList from './GameButtonList';
+import { Provider, connect } from 'react-redux';
 
 class Game extends Component{
     constructor(){
         super();
-        this.computerTurns = [];
-        this.humanTurns = [];
+        this.currentTurn = 'Computer';
+        this.currentHumanClick = '';
         this.state = {
             //Settings
-                counter: 9,
+                counter: 15,
                 strict:false,
                 toggleOn:false,
+                mouseDown: false,
             //GameState
                 computerTurns:[],
                 humanTurns:[],
@@ -24,6 +26,11 @@ class Game extends Component{
     
     this.toggleOnOff = this.toggleOnOff.bind(this);
     this.onHumanTurn = this.onHumanTurn.bind(this);
+    this.onComputerTurn = this.onComputerTurn.bind(this);
+    this.startGame = this.startGame.bind(this);
+    this.onEndTurn = this.onEndTurn.bind(this);
+    
+    
     }
 
     toggleOnOff(){
@@ -33,45 +40,78 @@ class Game extends Component{
 //GAME STATE METHODS
     onHumanTurn(buttonId){
         //Human should go onClick
-        this.humanTurns.push(buttonId);// keep a history of the turns
-        this.setState({humanTurns:this.humanTurns});        
+        this.currentHumanClick = buttonId;
+        const Turns = [...this.state.humanTurns, this.currentHumanClick];
+        this.setState({humanTurns:Turns,mouseDown:true}, ()=>{
+            this.startGame(); 
+        });        
+        this.currentTurn='Computer';            
+        
+    }
+    onEndTurn(buttonId){
+        this.setState({mouseDown:false});
     }
 
-  
     onComputerTurn(){
+        let Turn;
         switch(Math.floor((Math.random() * 4))){
+
             case 0:
-            this.computerTurns.push('green');
+            Turn = 'green';
             break;
             case 1:
-            this.computerTurns.push('red');
+            Turn = 'red';
             break;
             case 2:
-            this.computerTurns.push('blue');
+            Turn = 'blue'
             break;
             default:
-            this.computerTurns.push('yellow');
+            Turn = 'yellow'
             break;
         }
-        this.setState({computerTurns:this.computerTurns}); 
+        const Turns = [...this.state.computerTurns, Turn];
+        this.currentTurn = 'Player';
+        this.setState({computerTurns:Turns}, ()=>{  
+        }); 
+    }
+
+    startGame(){
+        this.Turn();       
+    }
+
+    Turn(){
+        if(this.state.computerTurns.length === this.state.humanTurns.length){
+            this.onComputerTurn();
+        }
     }
   
 
     render(){
-        const TurnOn = this.state.humanTurns.length;
-        const TurnThisButtonOn = this.state.humanTurns[TurnOn-1];//  props for GameButtonList
+        console.log('Turn: '+ this.currentTurn);
+        console.log('Computer Plays: ' + this.state.computerTurns);
+        console.log('Human Plays: ' + this.state.humanTurns);      
+        //Human Case
+        const TurnThisButtonOn = this.currentHumanClick;
+        //Computer Case
+        const turnArrayofButtonsOn = this.state.computerTurns;
+
         return(
             <div className="settings">
             <Counter counter = {this.state.counter}/>
-            <Start/> {/*Starts Game + Reset Game */}
+            <Start startGame = {this.startGame}/> {/*Starts Game + Reset Game */}
             <Strict/>
             <OnOff
                 toggleOn = {this.state.toggleOn} 
                 toggleOnOff = {this.toggleOnOff}/>
 
             <GameButtonList 
-                onHumanTurn = {this.onHumanTurn}
-                turnButtonOn = {TurnThisButtonOn}
+                onHumanTurn = {this.onHumanTurn} //onMouseDown future click event-> GameButton
+                mouseDown = {this.state.mouseDown} //onMouseDown click State ->GameButton
+                onEndTurn = {this.onEndTurn}// onMouseUp click event ->GameButton
+
+                turnButtonOn = {TurnThisButtonOn} // ->GameButtonList
+                turnArrayofButtonsOn = {turnArrayofButtonsOn} // ->GameButtonList
+                currentTurn = {this.currentTurn} // ->GameButtonList
             />
             </div>
         );

@@ -7,8 +7,8 @@ const Start = (props) =>{
             className="start Button"
             name="play-circle"
             size="2x"
-            style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)', color:'red' }}
-            onClick={props.clickStart}
+            style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)', color:'red',cursor: 'pointer' }}
+            onClick={props.startGame}
             />
     );
 }
